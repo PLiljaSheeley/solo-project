@@ -1,221 +1,231 @@
 <!DOCTYPE html>
 <html ng-app="app">
-   <head lang="en">
-       <meta charset="UTF-8">
-       <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href = "vendor/bootstrap/dist/css/bootstrap.min.css" rel = "stylesheet">
-        <link href = "views/main.css" rel = "stylesheet">
-       <script src="vendor/angular/angular.min.js" type="text/javascript"></script>
-		   <script src="assets/scripts/client.min.js" type="text/javascript"></script>
-       <title>National Karate</title>
-   </head>
-   <body>
-    <div id="imgBackground">
-      <div ng-controller="MainController" id="container">
-        <h1>Edina National Karate</h1>
-        <nav class="navbar navbar-light bg-faded">
-              <button ng-click="showHome()" class = "btn btn-info">Home</button>
-              <button ng-click="showStudents()" class = "btn btn-info">Students</button>
-              <button ng-click="showPrograms()" class = "btn btn-info">Programs</button>
-        </nav>
-
+  <head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href = "vendor/bootstrap/dist/css/bootstrap.min.css" rel = "stylesheet">
+    <link href = "views/main.css" rel = "stylesheet">
+    <script src="vendor/angular/angular.min.js" type="text/javascript"></script>
+    <script src="assets/scripts/client.min.js" type="text/javascript"></script>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:600' rel='stylesheet' type='text/css'>
+   <title>National Karate</title>
+  </head>
+  <body>
+    <div ng-controller="MainController" id="container">
+      <h1>Edina National Karate</h1>
+      <nav class="navbar navbar-light bg-faded">
+        <button ng-click="showHome()" class = "btn btn-info">Home</button>
+        <button ng-click="showStudents()" class = "btn btn-info">Students</button>
+        <button ng-click="showPrograms()" class = "btn btn-info">Programs</button>
+        <button ng-click="showSales()" class = "btn btn-info">Sales</button>
+      </nav>
+      <div id = "homeDiv" ng-show="homeHide">
+        <h2>Home</h2>
+          <div class = "form-group">
+            <label>Money made this month:</label>
+            <div class="col-sm-12"> 
+              <span>${{moneyForMonth}}</span><br />
+            </div>
+          </div>
+      </div>
       <div id = "studentDiv" ng-show="studentHide">
-          <h2>Create A Student</h2>
-          <div class="margin">
-           <form role="form" class = "form-horizontal">
-                <div class = "form-group">
-                    <input type="text" ng-model="student.name" placeholder="Name" /><br />
-                </div>
-                <div class = "form-group"> 
-                    <input type="text" ng-model="student.program" placeholder="Program" /><br />
-                </div>
-                <div class = "form-group">
-                    <input type="text" ng-model="student.address" placeholder="Address" /><br />
-                </div>
-                <div class = "form-group">
-                    <input type="text" ng-model="student.dateOfBirth" placeholder="Date Of Birth"/><br />
-                </div>
-                <div class = "form-group">
-                    <input type="text" ng-model="student.parentName" placeholder="Parent Name" /><br />
-                </div>
-                <div class = "form-group">
-                    <input type="text" ng-model="student.parentName2" placeholder="Parent Name" /><br />
-                </div>
-                <div class = "form-group">
-                    <input type="text" ng-model="student.homePhone" placeholder="Home Phone" /><br />
-                </div>
-                <div class = "form-group">
-                    <input type="text" ng-model="student.cellPhone" placeholder="Cell Phone" /><br />
-                </div>
-                <div class = "form-group">
-                    <input type="text" ng-model="student.email" placeholder="Email" /><br />
-                </div>
-                <input type="submit" class = "btn btn-primary" ng-click="add(student)" value="Save"/>
-           </form>
+        <h2>Create A Student</h2>
+        <div class="margin">
+          <form role="form" class = "form-horizontal">
+            <div class = "form-group">
+                <input type="text" ng-model="student.name" placeholder="Name" /><br />
+            </div>
+            <div class = "form-group"> 
+                <input type="text" ng-model="student.program" placeholder="Program" /><br />
+            </div>
+            <div class = "form-group">
+                <input type="text" ng-model="student.address" placeholder="Address" /><br />
+            </div>
+            <div class = "form-group">
+                <input type="text" ng-model="student.dateOfBirth" placeholder="Date Of Birth"/><br />
+            </div>
+            <div class = "form-group">
+                <input type="text" ng-model="student.parentName" placeholder="Parent Name" /><br />
+            </div>
+            <div class = "form-group">
+                <input type="text" ng-model="student.parentName2" placeholder="Parent Name" /><br />
+            </div>
+            <div class = "form-group">
+                <input type="text" ng-model="student.homePhone" placeholder="Home Phone" /><br />
+            </div>
+            <div class = "form-group">
+                <input type="text" ng-model="student.cellPhone" placeholder="Cell Phone" /><br />
+            </div>
+            <div class = "form-group">
+                <input type="text" ng-model="student.email" placeholder="Email" /><br />
+            </div>
+            <div class = "form-group">
+                <input type="text" ng-model="student.id" placeholder="ID" /><br />
+            </div>
+            <input type="submit" class = "btn btn-primary" ng-click="add(student); this.reset()" value="Save"/>
+          </form>
+          <h2>Students</h2>
+          <div ng-model = "studentObject" ng-repeat="student in studentArray">
+            <div class = "col-sm-3">
+              <div class = "well">
+                Name: {{ student.name }}<br /><div ng-show="edit"><input type="text" ng-model="student.name" /></div>
 
-            <h2>Students</h2>
-            <div ng-model = "studentObject" ng-repeat="student in studentArray">
-              <div class = "col-sm-4">
-                <div class = "well">
-                  Name: {{ student.name }}<br /><div ng-show="edit"><input type="text" ng-model="student.name" /></div>
+                Program: {{ student.program }}<br /><div ng-show="edit"><input type="text" ng-model="student.program" /></div>
 
-                  Program: {{ student.program }}<br /><div ng-show="edit"><input type="text" ng-model="student.program" /></div>
+                Address: {{ student.address }}<br /><div ng-show="edit"><input type="text" ng-model="student.address" /></div>
 
-                  Address: {{ student.address }}<br /><div ng-show="edit"><input type="text" ng-model="student.address" /></div>
+                Date Of Birth: {{ student.dateOfBirth }}<br /><div ng-show="edit"><input type="text" ng-model="student.dateOfBirth" /></div>
 
-                  Date Of Birth: {{ student.dateOfBirth }}<br /><div ng-show="edit"><input type="text" ng-model="student.dateOfBirth" /></div>
+                Parent Name: {{ student.parentName }}<br /><div ng-show="edit"><input type="text" ng-model="student.parentName" /></div>
 
-                  Parent Name: {{ student.parentName }}<br /><div ng-show="edit"><input type="text" ng-model="student.parentName" /></div>
+                Parent Name: {{ student.parentName2 }}<br /><div ng-show="edit"><input type="text" ng-model="student.parentName2" /></div>
 
-                  Parent Name: {{ student.parentName2 }}<br /><div ng-show="edit"><input type="text" ng-model="student.parentName2" /></div>
+                Home Phone: {{ student.homePhone }}<br /><div ng-show="edit"><input type="text" ng-model="student.homePhone" /></div>
 
-                  Home Phone: {{ student.homePhone }}<br /><div ng-show="edit"><input type="text" ng-model="student.homePhone" /></div>
+                Cell Phone: {{ student.cellPhone }}<br /><div ng-show="edit"><input type="text" ng-model="student.cellPhone" /></div>
 
-                  Cell Phone: {{ student.cellPhone }}<br /><div ng-show="edit"><input type="text" ng-model="student.cellPhone" /></div>
+                Email: {{ student.email }}<br /><div ng-show="edit"><input type="text" ng-model="student.email" /></div>
 
-                  Email: {{ student.email }}<br /><div ng-show="edit"><input type="text" ng-model="student.email" /></div>
+                Student ID: {{student.id}}<br /><div ng-show="edit"><input type="text" ng-model="student.id" /></div>
 
-                  Student ID: {{student.id}}<br /><div ng-show="edit"><input type="text" ng-model="student.id" /></div>
-
-                  <button type = "button" class = "btn btn-danger" ng-click="deleteStudent(student)">Delete Student</button>
-                  <button type = "button" class ="btn btn-success" ng-click= "$watch(edit = !edit, toggle = !toggle, change(student))"><span ng-show="toggle">Edit</span><span ng-hide="toggle">Save</span></button>
-                </div>
+                <button type = "button" class = "btn btn-danger" ng-click="deleteStudent(student)">Delete Student</button>
+                <button type = "button" class ="btn btn-success" ng-click= "$watch(edit = !edit, toggle = !toggle, change(student))"><span ng-show="toggle">Edit</span><span ng-hide="toggle">Save</span></button>
               </div>
             </div>
           </div>
         </div>
+      </div>
 
 
 
-        <div ng-show = "programHide" id = "programDiv">
-          <h2>Create A Program</h2>
+      <div ng-show = "programHide" id = "programDiv">
+        <h2>Create A Program</h2>
+        <form role="form" class = "form-horizontal">
+          <div class = "firstPageProgram" ng-show="firstProgramForm">
+            <div class = "form-group">
+              <label>Program enrolled: </label>
+              <div class="col-sm-12"> 
+                <input type="text" ng-model="currentRank" /><br />
+              </div>
+            </div>
+            <div class = "form-group">
+              <label>Current Rank: </label>
+              <div class="col-sm-12"> 
+                <input type="text" ng-model="rank" /><br />
+              </div>
+            </div>
+            <div class = "form-group">
+              <label>New Goal: </label>
+              <div class="col-sm-12"> 
+                <input type="text" ng-model="goal" /><br />
+              </div>
+            </div>
+            <div class = "form-group">
+              <label>Total Months: </label>
+              <div class="col-sm-12"> 
+                <input type="text" ng-model="totalMonths" /><br />
+              </div>
+            </div>
+            <input type ="submit" class = "btn btn-success" ng-click="firstNext()" value ="Next"/>
+          </div>
 
-          <form role="form" class = "form-horizontal">
-            <div class = "firstPageProgram" ng-show="firstProgramForm">
-              <div class = "form-group">
-                <label>Program enrolled: </label>
-                <div class="col-sm-12"> 
-                  <input type="text" ng-model="currentRank" /><br />
-                </div>
+          <div class = "secondPageProgram" ng-show="secondProgramForm">
+            <div class = "form-group">
+              <label>Tuition: </label>
+              <div class="col-sm-12"> 
+                <input type="text" ng-model="tuition" /><br />
               </div>
-              <div class = "form-group">
-                <label>Current Rank: </label>
-                <div class="col-sm-12"> 
-                  <input type="text" ng-model="rank" /><br />
-                </div>
+            </div>
+            <div class = "form-group">
+              <label>Family Discount: </label>
+              <div class="col-sm-12"> 
+                <input type="text" ng-model="familyDiscount" /><br />
               </div>
-              <div class = "form-group">
-                <label>New Goal: </label>
-                <div class="col-sm-12"> 
-                  <input type="text" ng-model="goal" /><br />
-                </div>
+            </div>
+            <div class = "form-group">
+              <label>Early Enrollment Discount: </label>
+              <div class="col-sm-12"> 
+                <input type="text" ng-model="earlyEnroll" /><br />
               </div>
-              <div class = "form-group">
-                <label>Total Months: </label>
-                <div class="col-sm-12"> 
-                  <input type="text" ng-model="totalMonths" /><br />
-                </div>
-              </div>
-              <input type ="submit" class = "btn btn-success" ng-click="firstNext()" value ="Next"/>
+            </div>
+              <input type ="submit" class = "btn btn-success" ng-click="secondNext()"value ="Next"/>
             </div>
 
-            <div class = "secondPageProgram" ng-show="secondProgramForm">
-              <div class = "form-group">
-                <label>Tuition: </label>
-                <div class="col-sm-12"> 
-                  <input type="text" ng-model="tuition" /><br />
-                </div>
+          <div class = "thirdPageProgram" ng-show="thirdProgramForm">
+            <div class = "form-group">
+              <label>Total Tutition: </label>
+              <div class="col-sm-12"> 
+                <span>${{totalTuition}}</span>
               </div>
-              <div class = "form-group">
-                <label>Family Discount: </label>
-                <div class="col-sm-12"> 
-                  <input type="text" ng-model="familyDiscount" /><br />
-                </div>
-              </div>
-              <div class = "form-group">
-                <label>Early Enrollment Discount: </label>
-                <div class="col-sm-12"> 
-                  <input type="text" ng-model="earlyEnroll" /><br />
-                </div>
-              </div>
-                <input type ="submit" class = "btn btn-success" ng-click="secondNext()"value ="Next"/>
-              </div>
-
-            <div class = "thirdPageProgram" ng-show="thirdProgramForm">
-              <div class = "form-group">
-                <label>Total Tutition: </label>
-                <div class="col-sm-12"> 
-                  <span>${{totalTuition}}</span>
-                </div>
-              </div>
-              <div class = "form-group">
-                <label>New Program: </label>
-                <div class="col-sm-12"> 
-                  <span>{{goal}} Belt</span>
-                </div>
-              </div>
-              <div class = "form-group">
-                <label>Uniform:</label>
-                <div class="col-sm-12"> 
-                  <input type="text" ng-model="uniform" /><br />
-                </div>
-              </div>
-              <div class = "form-group">
-                <label>Equipment: </label>
-                <div class="col-sm-12"> 
-                  <input type="text" ng-model="equipment" /><br />
-                </div>
-              </div>
-              <div class = "form-group">
-                <label>Promotion Fees: </label>
-                <div class="col-sm-12"> 
-                  <input type="text" ng-model="promotion" /><br />
-                </div>
-              </div>
-              <input type ="submit" class = "btn btn-success" ng-click="thirdNext()" value ="Next"/>
             </div>
-
-            <div class = "fourthPageProgram" ng-show="fourthProgramForm">
-              <div class = "form-group">
-                <label>Total Package: </label>
-                <div class="col-sm-12"> 
-                  <span>${{totalPackage}}</span>
-                </div>
+            <div class = "form-group">
+              <label>New Program: </label>
+              <div class="col-sm-12"> 
+                <span>{{goal}} Belt</span>
               </div>
-              <div class = "form-group">
-                <label>Program Tuition Remaining: </label>
-                <div class="col-sm-12"> 
-                  <input type="text" ng-model="currentRemainingTuition" /><br />
-                </div>
-              </div>
-              <div class = "form-group">
-                <label>Remaining Months: </label>
-                <div class="col-sm-12"> 
-                  <input type="text" ng-model="remainingMonths" /><br />
-                </div>
-              </div>
-                <input type ="submit" class = "btn btn-success" ng-click="fourthNext()"value ="Next"/>
             </div>
-
-            <div class = "fifthPageProgram" ng-show="fifthProgramForm">
-              <div class = "form-group">
-                <label>Total Tuition + Inclusions: </label>
-                <div class="col-sm-12"> 
-                  <span>${{totalWithInclusions}}</span>
-                </div>
+            <div class = "form-group">
+              <label>Uniform:</label>
+              <div class="col-sm-12"> 
+                <input type="text" ng-model="uniform" /><br />
               </div>
-                <input type ="submit" class = "btn btn-success" ng-click="showInvestmentOptions()"value ="Show Investment Options"/>
             </div>
-          </form>
+            <div class = "form-group">
+              <label>Equipment: </label>
+              <div class="col-sm-12"> 
+                <input type="text" ng-model="equipment" /><br />
+              </div>
+            </div>
+            <div class = "form-group">
+              <label>Promotion Fees: </label>
+              <div class="col-sm-12"> 
+                <input type="text" ng-model="promotion" /><br />
+              </div>
+            </div>
+            <input type ="submit" class = "btn btn-success" ng-click="thirdNext()" value ="Next"/>
+          </div>
+
+          <div class = "fourthPageProgram" ng-show="fourthProgramForm">
+            <div class = "form-group">
+              <label>Total Package: </label>
+              <div class="col-sm-12"> 
+                <span>${{totalPackage}}</span>
+              </div>
+            </div>
+            <div class = "form-group">
+              <label>Program Tuition Remaining: </label>
+              <div class="col-sm-12"> 
+                <input type="text" ng-model="currentRemainingTuition" /><br />
+              </div>
+            </div>
+            <div class = "form-group">
+              <label>Remaining Months: </label>
+              <div class="col-sm-12"> 
+                <input type="text" ng-model="remainingMonths" /><br />
+              </div>
+            </div>
+              <input type ="submit" class = "btn btn-success" ng-click="fourthNext()"value ="Next"/>
+          </div>
+
+          <div class = "fifthPageProgram" ng-show="fifthProgramForm">
+            <div class = "form-group">
+              <label>Total Tuition + Inclusions: </label>
+              <div class="col-sm-12"> 
+                <span>${{totalWithInclusions}}</span>
+              </div>
+            </div>
+              <input type ="submit" class = "btn btn-success" ng-click="showInvestmentOptions()"value ="Show Investment Options"/>
+          </div>
+        </form>
 
 
 
 
 
-          <div id = "investmentOptions" ng-show = "showInvestments">
+        <div id = "investmentOptions" ng-show = "showInvestments">
           <h3>Investment Options</h3>
-          <div id = "investPlan" class = "col-sm-4 well">
-            <form role="form" class = "form-horizontal">
+          <form role="form" class = "form-horizontal">
+            <div id = "investPlan" class = "col-sm-4 well">
               <div class = "form-group">
                 <label>Total Package: </label>
                 <div class="col-sm-12"> 
@@ -225,7 +235,7 @@
               <div class = "form-group">
                 <label>Initial Payment: </label>
                 <div class="col-sm-12"> 
-                  <input type="text" ng-model="initialPayment" /><br />
+                  <span>${{initialPayment}}</span><br />
                 </div>
               </div>
               <div class = "form-group">
@@ -255,7 +265,7 @@
               <div class = "form-group">
                 <label>Discount:</label>
                 <div class="col-sm-12"> 
-                  <input type="text" ng-model="fourPayDiscount" /><br />
+                  <span>{{fourPayDiscount*100}}%</span><br />
                 </div>
               </div>
               <div class = "form-group">
@@ -295,6 +305,24 @@
                 <label>One Pay Plan - Save 10% On Tuition</label>
               </div>
               <div class = "form-group">
+                <label>New Tuition</label>
+                <div class="col-sm-12"> 
+                  <span>${{onePayWithDiscount}}</span>
+                </div>
+              </div>
+              <div class = "form-group">
+                <label>Equipment + Exam Fees:</label>
+                <div class="col-sm-12"> 
+                  <span>${{totalPackage}}</span>
+                </div>
+              </div>
+              <div class = "form-group">
+                <label>Savings!!:</label>
+                <div class="col-sm-12"> 
+                  <span>${{oneSavings}}</span>
+                </div>
+              </div>
+              <div class = "form-group">
                 <label>Total Package: </label>
                 <div class="col-sm-12"> 
                   <span>${{onePayTotal}}</span>
@@ -307,11 +335,33 @@
                 </div>
               </div>
             </div>
+          </form>
+        </div>
+      </div>
+      <div ng-show = "salesHide" id = "salesDiv">
+        <h2>Enter Sales Info</h2>
+        <form role="form" class = "form-horizontal">
+          <div class = "form-group">
+            <label>Item Sold:</label>
+            <div class="col-sm-12"> 
+              <input type="text" ng-model="sale.item" /><br />
+            </div>
           </div>
+          <div class = "form-group">
+            <label>Quanity: </label>
+            <div class="col-sm-12"> 
+              <input type="text" ng-model="sale.quanity" /><br />
+            </div>
+          </div>
+          <div class = "form-group">
+            <label>Price: </label>
+            <div class="col-sm-12"> 
+              <input type="text" ng-model="sale.price" /><br />
+            </div>
+          </div>
+          <input type="submit" class = "btn btn-primary" ng-click="addSale(sale)" value="Save"/>
         </form>
       </div>
-    </div>
-    </div>
     </div>
   </body>
 </html>

@@ -3,33 +3,27 @@ html{
   height: 100%;
   display: block;
   position: relative;
-}
-html:before{
-  content: "";
-  background: url("NKKickBoxing_Logo.jpg");
-  opacity: 0.1;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  position: absolute;
-  z-index: -1;   
-    background-repeat: no-repeat;
-    background-position: 50% 0;
-    -ms-background-size: cover;
-    -o-background-size: cover;
-    -moz-background-size: cover;
-    -webkit-background-size: cover;
-    background-size: cover;
-}
+
 }
 body{
-	height:100%;
+height:100%;
+background: #F5F8FA;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0; 
+ font-family: 'Open Sans', sans-serif;
 }
-nav, h1, h2, #studentDiv, #programDiv{
+h1, h2, nav, #studentDiv, #programDiv, #salesDiv, #homeDiv{
 	text-align:center;
 }
-
-
-
+.col-sm-4{
+	height:30em;
+}
+.col-sm-3{
+	text-align:left;
+}
+.well {
+	background-color: rgba(245, 245, 245, 0.6);
+}
 

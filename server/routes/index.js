@@ -17,6 +17,13 @@ router.get('/student', function(request, response, next){
        next();
    });
 });
+router.get('/getSales', function(request,response,next){
+  return Sale.find({}).exec(function(err,sale){
+    if(err) throw new Error(err);
+    response.send(JSON.stringify(sale));
+    next();
+  });
+});
 router.put('/change/:id', function(request, response, next){
   Student.findById({_id: request.params.id}, function(err, Student) {
     if(Student){
@@ -29,6 +36,7 @@ router.put('/change/:id', function(request, response, next){
       Student.homePhone = request.body.homePhone;
       Student.cellPhone = request.body.cellPhone;
       Student.email = request.body.email;
+      Student.Id = request.body.id;
       Student.dateUpdated = new Date();
   }
   Student.save();
@@ -47,11 +55,24 @@ router.post('/add', function(request, response, next){
   homePhone:request.body.homePhone,
   cellPhone:request.body.cellPhone,
   email:request.body.email,
+  id:request.body.id,
   dateCreated:new Date(),
   dateUpdated:new Date()});
     studentRequest.save(function(err){
        if(err) console.log('error', err);
          response.send(studentRequest.toJSON());
+         next();
+   });
+});
+router.post('/sale', function(request, response, next){
+ var saleRequest = new Sale({item: request.body.item,
+  quanity:request.body.quanity,
+  price:request.body.price,
+  totalPrice:request.body.totalPrice,
+  dateCreated:new Date()});
+    saleRequest.save(function(err){
+       if(err) console.log('error', err);
+         response.send(saleRequest.toJSON());
          next();
    });
 });
@@ -80,6 +101,14 @@ parentName2:String,
 homePhone:String,
 cellPhone:String,
 email:String,
+id:String,
 dateCreated:Date,
 dateUpdated:Date});
+
+var Sale = mongoose.model('Sale', {item: String,
+  quanity: Number,
+  price: Number,
+  totalPrice: Number,
+  dateCreated:Date});
+
 module.exports = router;
